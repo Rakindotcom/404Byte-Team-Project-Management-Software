@@ -49,6 +49,7 @@ export default function TaskForm({ projectId, initialData, defaultStatus = 'todo
         { value: 'todo', label: 'To Do' },
         { value: 'in-progress', label: 'In Progress' },
         { value: 'review', label: 'Review' },
+        { value: 'need-fixing', label: 'Need Fixing' },
         { value: 'done', label: 'Done' }
     ];
 
@@ -83,28 +84,22 @@ export default function TaskForm({ projectId, initialData, defaultStatus = 'todo
                 />
             </div>
 
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Two Column Layout - Mobile Responsive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Priority */}
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-[--text-secondary]">
                         Priority
                     </label>
-                    <div className="flex space-x-2">
+                    <select
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value)}
+                        className="select-dark"
+                    >
                         {priorities.map(p => (
-                            <button
-                                key={p.value}
-                                type="button"
-                                onClick={() => setPriority(p.value)}
-                                className={`flex-1 py-2 px-3 text-sm rounded-lg border transition-all duration-200 font-medium ${priority === p.value
-                                    ? `${p.color} bg-opacity-10 border-current shadow-sm`
-                                    : 'text-[--text-muted] border-[--glass-border] hover:border-[--glass-border-hover] hover:bg-[--bg-tertiary] hover:text-[--text-secondary]'
-                                    } ${priority === p.value && p.value === 'low' ? 'bg-[--accent-green]/10' : ''} ${priority === p.value && p.value === 'medium' ? 'bg-[--accent-yellow]/10' : ''} ${priority === p.value && p.value === 'high' ? 'bg-[--accent-red]/10' : ''}`}
-                            >
-                                {p.label}
-                            </button>
+                            <option key={p.value} value={p.value}>{p.label}</option>
                         ))}
-                    </div>
+                    </select>
                 </div>
 
                 {/* Status */}
@@ -124,8 +119,8 @@ export default function TaskForm({ projectId, initialData, defaultStatus = 'todo
                 </div>
             </div>
 
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Two Column Layout - Mobile Responsive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Assignee */}
                 <div className="space-y-2">
                     <label className="block text-sm font-medium text-[--text-secondary]">
@@ -158,19 +153,19 @@ export default function TaskForm({ projectId, initialData, defaultStatus = 'todo
                 </div>
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center justify-end space-x-3 pt-2">
+            {/* Actions - Mobile Responsive */}
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2">
                 <button
                     type="button"
                     onClick={onCancel}
-                    className="btn-ghost"
+                    className="btn-ghost w-full sm:w-auto"
                     disabled={loading}
                 >
                     Cancel
                 </button>
                 <button
                     type="submit"
-                    className="btn-primary inline-flex items-center space-x-2"
+                    className="btn-primary inline-flex items-center justify-center space-x-2 w-full sm:w-auto"
                     disabled={loading || !title.trim()}
                 >
                     {loading ? (

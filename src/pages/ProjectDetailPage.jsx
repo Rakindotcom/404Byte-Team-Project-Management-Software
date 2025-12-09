@@ -136,28 +136,35 @@ export default function ProjectDetailPage() {
     return (
         <Layout>
             <div className="space-y-6">
-                {/* Header Bar */}
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                {/* Header Bar - Mobile Responsive */}
+                <div className="flex flex-col gap-4">
                     {/* Title & Breadcrumb */}
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-start gap-3">
                         <Link
                             to="/projects"
-                            className="p-2 rounded-lg hover:bg-[--bg-tertiary] text-[--text-muted] hover:text-[--text-primary] transition-colors"
+                            className="p-2 rounded-lg hover:bg-[--bg-tertiary] text-[--text-muted] hover:text-[--text-primary] transition-colors shrink-0"
                         >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
                         </Link>
-                        <div>
-                            <h1 className="text-xl font-bold text-[--text-primary]">{project.name}</h1>
+                        <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap mb-1">
+                                <h1 className="text-lg sm:text-xl font-bold text-[--text-primary]">{project.name}</h1>
+                                {project.genre && (
+                                    <span className={`badge ${project.genre === 'tech' ? 'badge-cyan' : 'badge-purple'}`}>
+                                        {project.genre === 'tech' ? 'Tech' : 'Media'}
+                                    </span>
+                                )}
+                            </div>
                             {project.description && (
-                                <p className="text-sm text-[--text-muted] truncate max-w-md">{project.description}</p>
+                                <p className="text-sm text-[--text-muted] line-clamp-2">{project.description}</p>
                             )}
                         </div>
                     </div>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-3">
+                    {/* Actions - Mobile Responsive */}
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                         {/* View Toggle */}
                         <div className="view-toggle">
                             <button
@@ -180,8 +187,19 @@ export default function ProjectDetailPage() {
                             </button>
                         </div>
 
-                        {/* Progress */}
-                        <div className="hidden md:flex items-center gap-2 text-sm">
+                        {/* Progress - Mobile: Full width, Desktop: Inline */}
+                        <div className="flex sm:hidden w-full items-center gap-2 text-sm px-1">
+                            <span className="text-[--text-muted] text-xs">{progressPercent}%</span>
+                            <div className="flex-1 h-1.5 bg-[--bg-tertiary] rounded-full overflow-hidden">
+                                <div
+                                    className="h-full bg-linear-to-r from-[--accent-cyan] to-[--accent-purple] rounded-full transition-all"
+                                    style={{ width: `${progressPercent}%` }}
+                                ></div>
+                            </div>
+                            <span className="text-[--text-muted] text-xs">{taskStats.done}/{taskStats.total}</span>
+                        </div>
+
+                        <div className="hidden sm:flex items-center gap-2 text-sm">
                             <span className="text-[--text-muted]">{progressPercent}%</span>
                             <div className="w-24 h-1.5 bg-[--bg-tertiary] rounded-full overflow-hidden">
                                 <div
@@ -191,15 +209,15 @@ export default function ProjectDetailPage() {
                             </div>
                         </div>
 
-                        {/* Add Task */}
+                        {/* Add Task - Mobile: Icon only, Desktop: With text */}
                         <button
                             onClick={() => setShowTaskModal(true)}
-                            className="btn-primary inline-flex items-center space-x-2"
+                            className="btn-primary inline-flex items-center justify-center space-x-2 flex-1 sm:flex-initial"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
-                            <span className="hidden sm:inline">New Task</span>
+                            <span>New Task</span>
                         </button>
 
                         {/* Project Menu */}

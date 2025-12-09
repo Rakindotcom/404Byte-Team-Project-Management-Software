@@ -12,6 +12,7 @@
  * @property {string} id - Firestore document ID
  * @property {string} name - Project name
  * @property {string} description - Project description
+ * @property {'tech'|'media'} genre - Project genre
  * @property {string} createdBy - User ID of creator
  * @property {Date|Object} createdAt - Creation timestamp
  */
@@ -41,7 +42,7 @@
  * @property {string} assignedTo - User ID of assignee
  * @property {'low'|'medium'|'high'} priority - Task priority
  * @property {string} deadline - ISO date string
- * @property {'todo'|'in-progress'|'review'|'done'} status - Task status
+ * @property {'todo'|'in-progress'|'review'|'need-fixing'|'done'} status - Task status
  * @property {Comment[]} comments - Task comments
  * @property {ActivityLog[]} activity - Activity history
  * @property {string} createdBy - User ID of creator
@@ -49,7 +50,10 @@
  */
 
 // Status options for tasks
-export const TASK_STATUSES = ['todo', 'in-progress', 'review', 'done'];
+export const TASK_STATUSES = ['todo', 'in-progress', 'review', 'need-fixing', 'done'];
+
+// Project genre options
+export const PROJECT_GENRES = ['tech', 'media'];
 
 // Priority options for tasks
 export const TASK_PRIORITIES = ['low', 'medium', 'high'];

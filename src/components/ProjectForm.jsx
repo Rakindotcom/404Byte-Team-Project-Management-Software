@@ -3,13 +3,14 @@ import { useState } from 'react';
 export default function ProjectForm({ initialData, onSubmit, onCancel }) {
     const [name, setName] = useState(initialData?.name || '');
     const [description, setDescription] = useState(initialData?.description || '');
+    const [genre, setGenre] = useState(initialData?.genre || 'tech');
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            await onSubmit({ name, description });
+            await onSubmit({ name, description, genre });
         } finally {
             setLoading(false);
         }
@@ -44,18 +45,33 @@ export default function ProjectForm({ initialData, onSubmit, onCancel }) {
                 />
             </div>
 
-            <div className="flex items-center justify-end space-x-3 pt-2">
+            <div className="space-y-2">
+                <label className="block text-sm font-medium text-[--text-secondary]">
+                    Genre <span className="text-[--accent-red]">*</span>
+                </label>
+                <select
+                    value={genre}
+                    onChange={(e) => setGenre(e.target.value)}
+                    className="select-dark"
+                    required
+                >
+                    <option value="tech">Tech</option>
+                    <option value="media">Media</option>
+                </select>
+            </div>
+
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2">
                 <button
                     type="button"
                     onClick={onCancel}
-                    className="btn-ghost"
+                    className="btn-ghost w-full sm:w-auto"
                     disabled={loading}
                 >
                     Cancel
                 </button>
                 <button
                     type="submit"
-                    className="btn-primary inline-flex items-center space-x-2"
+                    className="btn-primary inline-flex items-center justify-center space-x-2 w-full sm:w-auto"
                     disabled={loading || !name.trim()}
                 >
                     {loading ? (

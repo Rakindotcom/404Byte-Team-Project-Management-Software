@@ -348,3 +348,75 @@ export const subscribeToTask = (taskId, callback) => {
         }
     });
 };
+
+
+// ============ NOTICE OPERATIONS ============
+
+const NOTICES_COLLECTION = 'notices';
+
+/**
+ * Create new notice
+ * @param {Object} noticeData 
+ * @returns {Promise<string>} notice ID
+ */
+export const createNotice = async (noticeData) => {
+    const noticesRef = collection(db, NOTICES_COLLECTION);
+    const docRef = await addDoc(noticesRef, {
+        ...noticeData,
+        comments: [],
+        createdAt: serverTimestamp()
+    });
+    return docRef.id;
+};
+
+/**
+ * Subscribe to all notices
+ * @param {function} callback 
+ * @returns {function} unsubscribe
+ */
+export const subscribeToNotices = (callback) => {
+    const noticesRef = collection(db, NOTICES_COLLECTION);
+    const q = query(noticesRef, orderBy('createdAt', 'desc'));
+    return onSnapshot(q, (snapshot) => {
+        const notices = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        callback(notices);
+    });
+};
+
+/**
+ * Update notice
+ * @param {string} noticeId 
+ * @param {Object} updates 
+ */
+export const updateNotice = async (noticeId, updates) => {
+    const noticeRef = doc(db, NOTICES_COLLECTION, noticeId);
+    await updateDoc(noticeRef, updates);
+};
+
+/**
+ * Delete notice
+ * @param {string} noticeId 
+ */
+export const deleteNotice = async (noticeId) => {
+    const noticeRef = doc(db, NOTICES_COLLECTION, noticeId);
+    await deleteDoc(noticeRef);
+};
+
+/**
+ * Add comment to notice
+ * @param {string} noticeId 
+ * @param {Object} comment 
+ */
+export const addNoticeComment = async (noticeId, comment) => {
+    const noticeRef = doc(db, NOTICES_COLLECTION, noticeId);
+
+    const commentWithTimestamp = {
+        ...comment,
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString()
+    };
+
+    await updateDoc(noticeRef, {
+        comments: arrayUnion(commentWithTimestamp)
+    });
+};

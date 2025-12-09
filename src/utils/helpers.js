@@ -130,6 +130,7 @@ export const getStatusColor = (status) => {
         case 'done': return 'bg-[--accent-green]/15 text-[--accent-green] border border-[--accent-green]/30';
         case 'in-progress': return 'bg-[--accent-cyan]/15 text-[--accent-cyan] border border-[--accent-cyan]/30';
         case 'review': return 'bg-[--accent-purple]/15 text-[--accent-purple] border border-[--accent-purple]/30';
+        case 'need-fixing': return 'bg-[--accent-yellow]/15 text-[--accent-yellow] border border-[--accent-yellow]/30';
         case 'todo': return 'bg-[--bg-tertiary] text-[--text-muted] border border-[--glass-border]';
         default: return 'bg-[--bg-tertiary] text-[--text-muted]';
     }

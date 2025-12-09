@@ -23,10 +23,17 @@ export default function ProjectCard({ project }) {
         >
             {/* Header */}
             <div className="flex items-start justify-between mb-3">
-                <h3 className="font-semibold text-[--text-primary] group-hover:text-gradient transition-all duration-300">
-                    {project.name}
-                </h3>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
+                    <h3 className="font-semibold text-[--text-primary] group-hover:text-gradient transition-all duration-300">
+                        {project.name}
+                    </h3>
+                    {project.genre && (
+                        <span className={`badge ${project.genre === 'tech' ? 'badge-cyan' : 'badge-purple'} text-xs`}>
+                            {project.genre === 'tech' ? 'Tech' : 'Media'}
+                        </span>
+                    )}
+                </div>
+                <div className="flex items-center space-x-1 shrink-0">
                     <span className="text-xs text-[--text-muted]">{progressPercent}%</span>
                 </div>
             </div>

@@ -6,6 +6,7 @@ const COLUMNS = [
     { id: 'todo', title: 'To Do', color: 'gray' },
     { id: 'in-progress', title: 'Working On', color: 'cyan' },
     { id: 'review', title: 'Ready to Review', color: 'purple' },
+    { id: 'need-fixing', title: 'Need Fixing', color: 'yellow' },
     { id: 'done', title: 'Done', color: 'green' }
 ];
 
